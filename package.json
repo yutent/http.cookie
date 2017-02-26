@@ -1,0 +1,15 @@
+{
+  "name": "http.cookie",
+  "version": "1.0.0",
+  "description": "Read/Write cookies on http request",
+  "main": "index.js",
+  "keywords": [
+    "dojs",
+    "cookie",
+    "cookies",
+    "http"
+  ],
+  "repository": "https://github.com/yutent/http.cookie.git",
+  "author": "yutent",
+  "license": "MIT"
+}
