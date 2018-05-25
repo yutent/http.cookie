@@ -53,15 +53,21 @@ function serialize(key, val, opts) {
 
   let pairs = [key + '=' + val]
 
+  if (opts.hasOwnProperty('expires') && opts.expires) {
+    // 有效期, 已不建议使用,改用 max-age
+    // pairs.push('Expires=' + opts.expires.toUTCString())
+    if (Date.isDate(opts.expires)) {
+      opts.maxAge = ((opts.expires - 0) / 1000) >>> 0
+    } else {
+      opts.maxAge = opts.expires
+    }
+    delete opts.expires
+  }
+
   if (opts.hasOwnProperty('maxAge') && opts.maxAge) {
     //有效期
     opts.maxAge = opts.maxAge - 0
     pairs.push('Max-Age=' + opts.maxAge)
-  }
-
-  if (opts.hasOwnProperty('expires') && opts.expires) {
-    //有效期, 已不建议使用,改用 max-age
-    pairs.push('Expires=' + opts.expires.toUTCString())
   }
 
   if (opts.hasOwnProperty('domain')) {
@@ -69,7 +75,6 @@ function serialize(key, val, opts) {
     if (!KEY_REGEXP.test(opts.domain)) {
       return ''
     }
-
     pairs.push('Domain=' + opts.domain)
   }
 
